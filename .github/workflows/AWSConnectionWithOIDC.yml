@@ -1,19 +1,24 @@
-name: AWS CICD With OIDC and GitHub Actions
-
+name: AWS example workflow
 on:
-  push:
-  
+  push
+env:
+  AWS_REGION : "us-east-1"   
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read    # This is required for actions/checkout
 jobs:
-  greeting:
+  S3PackageUpload:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
     steps:
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-region: us-east-1
-        role-to-assume: arn:aws:iam::589918074230:role/aws-gh-oidc
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::357171621133:role/github-oidc-role
+          role-session-name: samplerolesession
+          aws-region: ${{ env.AWS_REGION }}
 
     - name: Print AWS SSM Parameter
       run: aws ssm get-parameter --name=hello_aws-gh-oidc --query Parameter.Value
