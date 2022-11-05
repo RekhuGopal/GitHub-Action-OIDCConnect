@@ -1,2 +1,3 @@
-# AnsibleAutomation
-This repo contains ansible playbooks which are used for 'Cloud Quick POCs' youtube channell demo.
+# GitHub-Action-OIDCConnect
+This repository share some best practices on GitHub Actions for AWS CICD tasks.
+1. AWS OIDC Connection based GitHub Actions 
