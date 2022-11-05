@@ -1,0 +1,22 @@
+name: AWS CICD With OIDC and GitHub Actions
+
+on:
+  push:
+  
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        role-to-assume: arn:aws:iam::589918074230:role/aws-gh-oidc
+
+    - name: Print AWS SSM Parameter
+      run: aws ssm get-parameter --name=hello_aws-gh-oidc --query Parameter.Value
+
+    - name: Print assumed role
+      run: aws sts get-caller-identity
