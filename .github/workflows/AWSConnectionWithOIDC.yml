@@ -10,7 +10,7 @@ permissions:
       contents: read    # This is required for actions/checkout
 jobs:
   DemoOIDC:
-    runs-on: self-hosted
+    runs-on: demo
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
