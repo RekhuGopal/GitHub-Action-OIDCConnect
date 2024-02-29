@@ -4,13 +4,13 @@ name: AWS OIDC Connect Demo
 on:
   push
 env:
-  AWS_REGION : "eu-west-2"   
+  AWS_REGION : "us-east-1"   
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
 jobs:
   DemoOIDC:
-    runs-on: demo
+    runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
