@@ -4,13 +4,13 @@ name: AWS OIDC Connect Demo
 on:
   push
 env:
-  AWS_REGION : "eu-west-2"   
+  AWS_REGION : "ap-southeast-2"   
 permissions:
-      id-token: write   # This is required for requesting the JWT
+      id-token: write   # This is required for requesting the Test
       contents: read    # This is required for actions/checkout
 jobs:
-  DemoOIDC:
-    runs-on: demo
+  Learning_1:
+    runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
@@ -18,12 +18,12 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::357171621133:role/github-oidc-role
+          role-to-assume: arn:aws:iam::372567179692:role/github-oidc-role
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Print AWS SSM Parameter
-        run: aws ssm get-parameter --name=hello_aws-gh-oidc --query Parameter.Value
+        run: aws ssm get-parameter --name=hello_aws_gh_oidc --query Parameter.Value
 
       - name: Print assumed role
         run: aws sts get-caller-identity
