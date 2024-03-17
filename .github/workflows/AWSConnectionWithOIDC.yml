@@ -1,29 +1,24 @@
-#For the provider URL: Use https://token.actions.githubusercontent.com
-#For the "Audience": Use sts.amazonaws.com 
-name: AWS OIDC Connect Demo
-on:
-  push
-env:
-  AWS_REGION : "eu-west-2"   
-permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
-jobs:
-  DemoOIDC:
-    runs-on: demo
-    steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v3
+name: 'Execute AWS Actions'
 
-      - name: configure aws credentials
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  aws:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::357171621133:role/github-oidc-role
-          role-session-name: samplerolesession
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::027417463143:role/sts-lab-2-target
+          role-session-name: OIDCSession
 
-      - name: Print AWS SSM Parameter
-        run: aws ssm get-parameter --name=hello_aws-gh-oidc --query Parameter.Value
-
-      - name: Print assumed role
-        run: aws sts get-caller-identity
+      - name: Execute AWS Command
+        run: |
+          aws sts get-caller-identity
