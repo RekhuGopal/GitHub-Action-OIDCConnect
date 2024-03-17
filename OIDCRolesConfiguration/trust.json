@@ -1,21 +1,24 @@
 {
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Federated": "arn:aws:iam::357171621133:oidc-provider/token.actions.githubusercontent.com"
-        },
-        "Action": "sts:AssumeRoleWithWebIdentity",
-        "Condition": {
-          "StringEquals": {
-            "token.actions.githubusercontent.com:sub": [
-              "repo:RekhuGopal/GitHub-Action-OIDCConnect:pull_request",
-              "repo:RekhuGopal/GitHub-Action-OIDCConnect:ref:refs/heads/main"
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::027417463143:oidc-provider/token.actions.githubusercontent.com"
+            },
+            "Action": [
+                "sts:TagSession",
+                "sts:AssumeRoleWithWebIdentity"
             ],
-            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-          }
+            "Condition": {
+                "StringEquals": {
+                    "token.actions.githubusercontent.com:sub": [
+                        "repo:*/hacktricks-training*:pull_request",
+                        "repo:*/hacktricks-training*:ref:refs/heads/main"
+                    ],
+                    "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+                }
+            }
         }
-      }
     ]
-  }
+}
