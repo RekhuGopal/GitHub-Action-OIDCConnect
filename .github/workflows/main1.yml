@@ -1,0 +1,27 @@
+name: 'test AWS Access'
+
+# The workflow should only trigger on pull requests to the main branch
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  aws:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read # needed for private repos to checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::027417463143:role/sts-lab-2-target
+          role-session-name: OIDCSession
+
+      - run: aws sts get-caller-identity
+        shell: bash
