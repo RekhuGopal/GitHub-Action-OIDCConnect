@@ -1,0 +1,24 @@
+name: 'Execute AWS Actions'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  aws:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::027417463143:role/sts-lab-2-target
+          role-session-name: OIDCSession
+
+      - name: Execute AWS Command
+        run: |
+          aws sts get-caller-identity
