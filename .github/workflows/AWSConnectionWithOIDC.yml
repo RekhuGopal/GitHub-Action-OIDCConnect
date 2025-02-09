@@ -1,13 +1,11 @@
-#For the provider URL: Use https://token.actions.githubusercontent.com
-#For the "Audience": Use sts.amazonaws.com 
 name: AWS OIDC Connect Demo
 on:
   push
 env:
   AWS_REGION : "eu-west-2"   
 permissions:
-      id-token: write   # This is required for requesting the JWT
-      contents: read    # This is required for actions/checkout
+      id-token: write
+      contents: read
 jobs:
   DemoOIDC:
     runs-on: demo
